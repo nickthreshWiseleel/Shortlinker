@@ -30,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['url'])) {
 
     $linkMaker = new LinkMaker($originalLink);
 
+    $shortLink = $linkMaker->setLink($shortlinkLength);
+
     $selectingQuery = new SelectingQuery("links", "short", "short", $shortLink);
 
     $PostgreSQLDatabaseHandler = new PostgreSQLDatabaseHandler($databaseConnection);
 
     $insertingQuery = new InsertingQuery("links", "link", "short", $originalLink, $shortLink);
-
-    $shortLink = $linkMaker->setLink($shortlinkLength);
 
     while ($shortLink == $PostgreSQLDatabaseHandler->processQuery($selectingQuery, "")) {
 
